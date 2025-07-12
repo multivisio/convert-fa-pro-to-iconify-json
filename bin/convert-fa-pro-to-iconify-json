@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+import { convertFaProToIconifyJson } from '../dist/convert-fa-pro-npm.js';
+import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+
+const pkg = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf-8')
+);
+const packageName = pkg.name;
+const currentVersion = pkg.version;
+
+try {
+  const latestVersion = execSync(`npm view ${packageName} version`, { encoding: 'utf-8' }).trim();
+  if (latestVersion && latestVersion !== currentVersion) {
+    console.warn(
+      `\n⚠️  A newer version (${latestVersion}) of ${packageName} is available. You are using ${currentVersion}.\n` +
+      `Update with: npm install -g ${packageName}\n`
+    );
+  }
+} catch (e) {
+  // Silent fail if npm is not available or network error
+}
+
+const outDir = process.argv[2] || 'font-awesome-iconify';
+
+console.log(`Converting Font Awesome Pro icons to Iconify JSON...`);
+console.log(`Output directory: ${outDir}`);
+
+try {
+  convertFaProToIconifyJson({ outDir });
+  console.log('✅ Conversion completed successfully.');
+} catch (err) {
+  console.error('❌ Conversion failed:', err instanceof Error ? err.message : err);
+  process.exit(1);
+}
