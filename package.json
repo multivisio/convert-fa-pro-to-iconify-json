@@ -1,25 +1,22 @@
 {
-  "name": "@multivisio/convert-fa-pro-to-iconify-json",
-  "version": "1.0.12",
-  "description": "CLI tool to convert Font Awesome Pro SVG icons to Iconify JSON collections for use in Iconify-compatible projects.",
+  "name": "@multivisio/fa-pro-to-iconify-json",
+  "version": "1.0.0",
+  "description": "Convert Font Awesome Pro SVG icons to Iconify JSON collections and create custom Iconify icon sets programmatically in Node.js or TypeScript projects.",
   "keywords": [
     "fontawesome",
-    "font awesome",
-    "fontawesome pro",
+    "font-awesome",
     "iconify",
-    "iconify json",
-    "svg icons",
-    "icon converter",
-    "icon set",
-    "cli",
-    "nodejs",
-    "typescript",
-    "json",
     "svg",
-    "icon collection",
-    "fa pro",
-    "fa",
-    "icon tools"
+    "icon",
+    "icons",
+    "converter",
+    "json",
+    "typescript",
+    "nodejs",
+    "icon-set",
+    "svg-to-json",
+    "fa-pro",
+    "icon-library"
   ],
   "homepage": "https://github.com/multivisio/convert-fa-pro-to-iconify-json#readme",
   "bugs": {
@@ -36,17 +33,16 @@
   "directories": {
     "lib": "lib"
   },
-  "bin": {
-    "convert-fa-pro-to-iconify-json": "bin/convert-fa-pro-to-iconify-json"
-  },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run format && npm run lint:fix && tsc",
     "prepare": "npm run build",
-    "postinstall": "node dist/convert-fa-pro-npm.js",
-    "convert": "tsx lib/convert-fa-pro-npm.ts",
-    "test": "tsx test.ts"
+    "test": "tsx test.ts",
+    "lint": "npm run format && eslint . --ext .js,.ts",
+    "lint:fix": "npm run format && eslint . --ext .js,.ts --fix",
+    "format": "prettier --write \"**/*.{js,ts,json,md}\""
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/pro-light-svg-icons": "^6.7.2",
     "@fortawesome/pro-regular-svg-icons": "^6.7.2",
@@ -56,7 +52,17 @@
     "@iconify/types": "^2.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@eslint/json": "^0.13.0",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
-    "tsx": "^4.20.3"
+    "tsx": "^4.20.3",
+    "typescript-eslint": "^8.36.0"
   }
 }

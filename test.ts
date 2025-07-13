@@ -1,9 +1,8 @@
-import { buildIconSet } from "./lib/build-icon-set.js";
-import { far } from "@fortawesome/pro-regular-svg-icons"
+import { buildIconSet } from "./lib/index";
 
-const set = buildIconSet("pfar", [
-  far.faAlarmClock,
-  far.faArrowDown,
-]);
+const set = buildIconSet("pfar", {
+  prefix: "far",
+  iconNames: ["arrow-rotate-right"],
+});
 
-console.log(set)
+console.log(set);
