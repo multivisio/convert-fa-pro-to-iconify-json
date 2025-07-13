@@ -1,6 +1,6 @@
 {
   "name": "@multivisio/convert-fa-pro-to-iconify-json",
-  "version": "1.0.0",
+  "version": "1.0.12",
   "description": "CLI tool to convert Font Awesome Pro SVG icons to Iconify JSON collections for use in Iconify-compatible projects.",
   "keywords": [
     "fontawesome",
@@ -32,7 +32,7 @@
   "license": "ISC",
   "author": "Michael Dörer",
   "type": "module",
-  "main": "dist/convert-fa-pro-npm.js",
+  "main": "dist/index.js",
   "directories": {
     "lib": "lib"
   },
@@ -42,7 +42,9 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "convert": "node dist/convert-fa-pro-npm.js"
+    "postinstall": "node dist/convert-fa-pro-npm.js",
+    "convert": "tsx lib/convert-fa-pro-npm.ts",
+    "test": "tsx test.ts"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -54,6 +56,7 @@
     "@iconify/types": "^2.0.0"
   },
   "devDependencies": {
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3"
   }
 }

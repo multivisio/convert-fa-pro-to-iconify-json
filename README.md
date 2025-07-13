@@ -1,88 +1,54 @@
 # convert-fa-pro-to-iconify-json
 
-
-Convert Font Awesome Pro SVG icons to Iconify JSON collections via CLI or as a reusable Node.js module.
+Convert Font Awesome Pro SVG icons to Iconify JSON collections for use in Iconify-compatible projects or to create custom Iconify icon sets from your exported JSON files.
 
 ## Features
 
 - Converts multiple Font Awesome Pro icon sets (brands, regular, solid, thin, light) to Iconify JSON format
-- Outputs each collection to a separate folder
-- Usable as a global CLI tool or as a Node.js module
-- CLI: Optional output directory as argument
-- CLI: User-friendly output and error messages
+- Outputs each collection to a separate folder at the package root (`font-awesome-iconify`)
+- Provides utility functions to create custom Iconify icon sets from your exported JSON files
+- Usable as a Node.js/TypeScript module
 
 ## Installation
 
 You need access to Font Awesome Pro npm packages for this tool to work.
 
-Install globally via npm:
+Install as a dev dependency in your project:
 
 ```bash
-npm install -g @multivisio/convert-fa-pro-to-iconify-json
+npm install --save-dev @multivisio/convert-fa-pro-to-iconify-json
 ```
 
 ## Usage
 
-Navigate to a project where you have the Font Awesome Pro npm packages installed (or install them there).
+After running the conversion (see your project setup for details), you will have JSON files for each Font Awesome Pro style in the `font-awesome-iconify` directory at your project root.
 
-
-Then run:
-
-```bash
-convert-fa-pro-to-iconify-json [output-directory]
-```
-
-If you omit `[output-directory]`, the default is `font-awesome-iconify` in your current working directory.
-
-This will generate Iconify-compatible JSON files for each Font Awesome Pro style in the specified directory.
-
-### Example output
-
-```
-Converting Font Awesome Pro icons to Iconify JSON...
-Output directory: font-awesome-iconify
-✅ Conversion completed successfully.
-```
-
+You can then use the provided utility functions to create custom Iconify icon sets from these JSON files.
 
 ## Programmatic Usage
 
-
-You can also use this tool as a module in your own Node.js or TypeScript scripts:
-
 **JavaScript:**
 ```js
-import { convertFaProToIconifyJson } from '@multivisio/convert-fa-pro-to-iconify-json';
+import { iconSetFab, iconSetFas, iconSetFar, iconSetFat, iconSetFal } from '@multivisio/convert-fa-pro-to-iconify-json';
 
-convertFaProToIconifyJson({ outDir: 'my-output-dir' });
+// Example: Create a custom icon set with selected brand icons
+const myBrandIcons = iconSetFab(['github', 'twitter', 'facebook']);
+console.log(myBrandIcons);
 ```
 
 **TypeScript:**
 ```ts
-import { convertFaProToIconifyJson, ConvertOptions } from '@multivisio/convert-fa-pro-to-iconify-json';
+import { iconSetFab, iconSetFas, iconSetFar, iconSetFat, iconSetFal } from '@multivisio/convert-fa-pro-to-iconify-json';
 
-const options: ConvertOptions = { outDir: 'my-output-dir' };
-convertFaProToIconifyJson(options);
+// Example: Create a custom icon set with selected solid icons
+const mySolidIcons = iconSetFas(['user', 'home', 'star']);
+console.log(mySolidIcons);
 ```
 
 ## Requirements
 
 - Node.js v22 or newer
 - Font Awesome Pro npm packages (brands, regular, solid, thin, light)
-
-## Example
-
-
-```bash
-cd my-project-with-fa-pro
-# Default output directory:
-convert-fa-pro-to-iconify-json
-# Output: ./font-awesome-iconify/{brands,regular,solid,thin,light}/icons.json
-
-# Custom output directory:
-convert-fa-pro-to-iconify-json my-output-dir
-# Output: ./my-output-dir/{brands,regular,solid,thin,light}/icons.json
-```
 
 ## License
 

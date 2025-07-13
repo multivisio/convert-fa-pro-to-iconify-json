@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { blankIconSet } from '@iconify/tools';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 // import the fonts you want to convert
 import { fab as faProBrandsIcons, prefix as faProBrandsPrefix, } from '@fortawesome/free-brands-svg-icons';
 import { far as faProRegularIcons, prefix as faProRegularPrefix, } from '@fortawesome/pro-regular-svg-icons';
@@ -9,9 +10,12 @@ import { fat as faProThinIcons, prefix as faProThinPrefix, } from '@fortawesome/
 import { fal as faProLightIcons, prefix as faProLightPrefix, } from '@fortawesome/pro-light-svg-icons';
 /**
  * Converts Font Awesome Pro icons to Iconify JSON collections.
- * @param options Optional output directory (default: ./font-awesome-iconify)
+ * Output directory is always at the package root: ./font-awesome-iconify
  */
-export function convertFaProToIconifyJson(options = {}) {
+export function convertFaProToIconifyJson() {
+    // Bestimme das Root-Verzeichnis des Pakets (dort, wo diese Datei liegt, zwei Ebenen hoch)
+    const __filename = fileURLToPath(import.meta.url);
+    const packageRoot = join(dirname(__filename), '..');
     const icons = [
         { icons: faProBrandsIcons, prefix: faProBrandsPrefix },
         { icons: faProRegularIcons, prefix: faProRegularPrefix },
@@ -19,7 +23,14 @@ export function convertFaProToIconifyJson(options = {}) {
         { icons: faProThinIcons, prefix: faProThinPrefix },
         { icons: faProLightIcons, prefix: faProLightPrefix },
     ];
-    const collectionTargetDir = join(process.cwd(), options.outDir || 'font-awesome-iconify');
+    const collectionTargetDir = join(packageRoot, 'icons');
+    // Check if the output directory exists
+    if (fs.existsSync(collectionTargetDir)) {
+        fs.rmSync(collectionTargetDir, { recursive: true, force: true });
+    }
+    fs.mkdirSync(collectionTargetDir, {
+        recursive: true,
+    });
     const baseInfo = {
         name: 'Font Awesome',
         author: {
@@ -50,10 +61,9 @@ export function convertFaProToIconifyJson(options = {}) {
             });
         }
         const data = iconSet.export();
+        //console.log(data);
         const dataJson = JSON.stringify(data, null, 2);
-        const jsonTargetDir = join(collectionTargetDir, iconData.prefix);
-        const fileName = join(jsonTargetDir, 'icons.json');
-        fs.mkdirSync(jsonTargetDir, { recursive: true });
+        const fileName = join(collectionTargetDir, `${iconData.prefix}.json`);
         fs.writeFileSync(fileName, dataJson, {
             encoding: 'utf-8',
         });
@@ -61,6 +71,5 @@ export function convertFaProToIconifyJson(options = {}) {
 }
 // CLI usage
 if (import.meta.url === `file://${process.argv[1]}`) {
-    const outDir = process.argv[2];
-    convertFaProToIconifyJson({ outDir });
+    convertFaProToIconifyJson();
 }
