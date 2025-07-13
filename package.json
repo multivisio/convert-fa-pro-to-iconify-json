@@ -1,6 +1,6 @@
 {
   "name": "@multivisio/fa-pro-to-iconify-json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert Font Awesome Pro SVG icons to Iconify JSON collections and create custom Iconify icon sets programmatically in Node.js or TypeScript projects.",
   "keywords": [
     "fontawesome",

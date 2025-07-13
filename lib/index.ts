@@ -49,10 +49,10 @@ function buildIconDefinitions(icons: RequestIconNames): IconDefinition[] {
  * @param icons - Either an object with prefix and iconNames (to look up Font Awesome icons), or an array of IconDefinition objects.
  * @returns An Iconify JSON object containing the selected icons.
  */
-export function buildIconSet(
+export async function buildIconSet(
   name: string,
   icons: RequestIconNames | IconDefinition[],
-): IconifyJSON {
+): Promise<IconifyJSON> {
   icons = Array.isArray(icons) ? icons : buildIconDefinitions(icons);
 
   const baseInfo = {

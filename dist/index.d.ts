@@ -15,5 +15,5 @@ type RequestIconNames = {
  * @param icons - Either an object with prefix and iconNames (to look up Font Awesome icons), or an array of IconDefinition objects.
  * @returns An Iconify JSON object containing the selected icons.
  */
-export declare function buildIconSet(name: string, icons: RequestIconNames | IconDefinition[]): IconifyJSON;
+export declare function buildIconSet(name: string, icons: RequestIconNames | IconDefinition[]): Promise<IconifyJSON>;
 export {};
